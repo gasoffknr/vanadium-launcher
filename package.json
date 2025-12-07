@@ -1,7 +1,7 @@
 {
     "name": "Vanadium-launcher",
     "preductname": "Vanadium launcher",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": " Vanadium launcher pvp modee",
     "main": "src/app.js",
     "author": "Gasoff_knr",
@@ -32,6 +32,6 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/luuxis/Selvania-Launcher.git"
+        "url": "git+https://github.com/gasoffknr/vanadium-launcher.git"
     }
 }
