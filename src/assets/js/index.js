@@ -44,13 +44,18 @@ class Splash {
 
     async checkUpdate() {
         if (dev) return this.startLauncher();
-        this.setStatus(`recherche de mise à jour...`);
+        this.setStatus(`Recherche de mise à jour...`);
 
-        ipcRenderer.invoke('update-app').then(err => {
-            if (err.error) {
-                let error = err.message;
-                this.shutdown(`erreur lors de la recherche de mise à jour :<br>${error}`);
+        ipcRenderer.invoke('update-app').then(res => {
+            // ← FIX: Ajoute le check "res &&"
+            if (res && res.error) {
+                let error = res.message;
+                this.shutdown(`Erreur lors de la recherche de mise à jour :<br>${error}`);
             }
+        }).catch(error => {
+            // ← FIX: Ajoute un catch pour gérer les erreurs
+            console.error('Update check failed:', error);
+            this.shutdown(`Erreur lors de la vérification de mise à jour`);
         })
 
         ipcRenderer.on('updateAvailable', () => {
@@ -65,6 +70,12 @@ class Splash {
 
         ipcRenderer.on('update-not-available', () => {
             this.maintenanceCheck();
+        })
+
+        // ← FIX: Ajoute la gestion des erreurs d'update
+        ipcRenderer.on('update-error', (event, error) => {
+            console.error('Update error:', error);
+            this.shutdown(`Erreur lors de la mise à jour :<br>${error.message || error}`);
         })
     }
 

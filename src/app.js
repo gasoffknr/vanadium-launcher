@@ -60,13 +60,14 @@ app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') app.quit();
 });
 
+// ============== AUTO-UPDATER ==============
 
 autoUpdater.autoDownload = false;
 
 ipcMain.handle('update-app', () => {
     return new Promise(async(resolve, reject) => {
         autoUpdater.checkForUpdates().then(() => {
-            resolve();
+            resolve({ success: true });  // ← FIX: Retourne un objet au lieu de undefined
         }).catch(error => {
             resolve({
                 error: true,
@@ -76,25 +77,35 @@ ipcMain.handle('update-app', () => {
     })
 })
 
-autoUpdater.on('update-available', () => {
+autoUpdater.on('update-available', (info) => {
+    console.log('Update disponible:', info.version);
     const updateWindow = UpdateWindow.getWindow();
     if (updateWindow) updateWindow.webContents.send('updateAvailable');
 });
 
 ipcMain.on('start-update', () => {
+    console.log('Démarrage du téléchargement...');
     autoUpdater.downloadUpdate();
 })
 
-autoUpdater.on('update-not-available', () => {
+autoUpdater.on('update-not-available', (info) => {
+    console.log('Pas d\'update disponible');
     const updateWindow = UpdateWindow.getWindow();
     if (updateWindow) updateWindow.webContents.send('update-not-available');
 });
 
-autoUpdater.on('update-downloaded', () => {
-    autoUpdater.quitAndInstall();
+autoUpdater.on('update-downloaded', (info) => {
+    console.log('Update téléchargée, installation...');
+    autoUpdater.quitAndInstall(false, true);
 });
 
 autoUpdater.on('download-progress', (progress) => {
     const updateWindow = UpdateWindow.getWindow();
     if (updateWindow) updateWindow.webContents.send('download-progress', progress);
+})
+
+autoUpdater.on('error', (error) => {
+    console.error('Erreur auto-updater:', error);
+    const updateWindow = UpdateWindow.getWindow();
+    if (updateWindow) updateWindow.webContents.send('update-error', error);
 })
