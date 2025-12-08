@@ -22,8 +22,8 @@
     border: none;
     margin: 2% 0;
     height: 2em;
-    background-color: #6200bd;
-    box-shadow: 0 0 5px #6200bd;
+    background-color: hsl(260, 98%, 36%);
+    box-shadow: 0 0 5px hsl(260, 98%, 36%);
     color: #ffffff;
     font: normal normal bold 19px/29px Poppins;
     cursor: pointer;
@@ -31,19 +31,19 @@
 }
 
 .login-type-btn:hover {
-    background-color: hsl(260, 98%, 36%);
-    box-shadow: 0 0 5px hsl(260, 98%, 36%);
+    background-color: #6200bd;
+    box-shadow: 0 0 5px #6200bd;
 }
 
 .login-type-btn:disabled {
-    background-color: hsl(260, 98%, 36%);
-    box-shadow: 0 0 5px hsl(260, 98%, 36%);
+    background-color: #6200bd;
+    box-shadow: 0 0 5px #6200bd;
     cursor: default;
 }
 
 .login-type-btn:disabled:hover {
-    background-color: hsl(260, 98%, 36%);
-    box-shadow: 0 0 5px hsl(260, 98%, 36%);
+    background-color: #6200bd;
+    box-shadow: 0 0 5px #6200bd;
 }
 
 .login-card-mojang {

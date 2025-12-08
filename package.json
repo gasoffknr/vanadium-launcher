@@ -1,7 +1,7 @@
 {
     "name": "Vanadium-launcher",
     "preductname": "Vanadium-launcher",
-    "version": "0.1.6",
+    "version": "0.1.7",
     "description": " Vanadium launcher pvp modee",
     "main": "src/app.js",
     "author": "Gasoff_knr",
